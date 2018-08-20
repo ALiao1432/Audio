@@ -41,7 +41,17 @@ public class ViewPagerActivity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return tabTitles[position];
+
+            switch (tabTitles[position]){
+                case "Linear":
+                    return "Song";
+                case "Grid":
+                    return "Album";
+
+                default:
+                    return "TAB";
+            }
+
         }
 
         @Override
