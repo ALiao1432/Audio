@@ -19,12 +19,12 @@
         <activity android:name=".ui.ViewPagerActivity">
 
         </activity>
-        <!--<activity-->
-            <!--android:name=".ui.SongActivity"-->
-            <!--android:label="@string/title_activity_song"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
+        <activity
+            android:name=".ui.SongActivity"
+            android:label="@string/title_activity_song"
+            android:theme="@style/AppTheme.NoActionBar">
 
-        <!--</activity>-->
+        </activity>
     </application>
 
 </manifest>
