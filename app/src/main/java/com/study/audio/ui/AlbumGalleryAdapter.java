@@ -1,6 +1,7 @@
 package com.study.audio.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
@@ -65,7 +66,7 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
         return 5;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public CardView albumCardView;
         public TextView albumTextView;
@@ -78,6 +79,15 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
             albumTextView = (TextView) itemView.findViewById(R.id.card_album_text);
             albumArtistTextView = (TextView) itemView.findViewById(R.id.card_album_artist);
             albumImageView = (ImageView) itemView.findViewById(R.id.card_album_img);
+
+            albumCardView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(mContext, SongActivity.class);
+            i.putExtra("",0);
+            mContext.startActivity(i);
         }
     }
 

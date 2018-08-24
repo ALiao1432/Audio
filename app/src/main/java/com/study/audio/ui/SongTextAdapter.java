@@ -19,8 +19,8 @@ public class SongTextAdapter extends RecyclerView.Adapter<SongTextAdapter.ViewHo
     private Context mContext;
     private MediaMetadataCompat media;
 
+
     public SongTextAdapter() {
-        //this.mContext = mContext;
 
     }
 
