@@ -38,7 +38,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_pager);
         setSupportActionBar(toolbar);
 
         // Find our drawer view
@@ -47,6 +47,10 @@ public class ViewPagerActivity extends AppCompatActivity {
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
+
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        // Setup drawer view
+        setupDrawerContent(nvDrawer);
     }
 
     @Override
@@ -122,4 +126,16 @@ public class ViewPagerActivity extends AppCompatActivity {
         // and will not render the hamburger icon without it.
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        //selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
 }

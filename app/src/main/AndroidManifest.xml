@@ -25,6 +25,9 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <activity android:name=".ui.AudioPlayerActivity">
+
+        </activity>
     </application>
 
 </manifest>
