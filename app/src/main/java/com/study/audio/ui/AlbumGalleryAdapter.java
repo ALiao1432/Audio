@@ -22,8 +22,7 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
     private MediaMetadataCompat media;
 
     public AlbumGalleryAdapter() {
-        //this.mContext = mContext;
-
+        // TODO: 2018/9/3 Constructor with Music Structure
     }
 
     @NonNull
@@ -34,13 +33,6 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View albumView = inflater.inflate(R.layout.cardview_album, parent, false);
-        albumView.setOnClickListener(v -> {
-//                Intent intent = new Intent(getActivity(), MainActivity.class);
-//                //intent.putExtra("metadata", media);
-//                startActivity(intent);
-                }
-        );
-        //AlbumGalleryAdapter.ViewHolder viewHolder = new AlbumGalleryAdapter.ViewHolder(albumView);
 
         return new AlbumGalleryAdapter.ViewHolder(albumView);
     }
@@ -81,10 +73,14 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
             albumImageView = (ImageView) itemView.findViewById(R.id.card_album_img);
 
             albumCardView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
+
+            // TODO: 2018/9/3 Pass the Music Content and Start the Activity
+
             Intent i = new Intent(mContext, SongActivity.class);
             i.putExtra("",0);
             mContext.startActivity(i);

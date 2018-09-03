@@ -1,6 +1,7 @@
 package com.study.audio.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
@@ -21,7 +22,7 @@ public class SongTextAdapter extends RecyclerView.Adapter<SongTextAdapter.ViewHo
 
 
     public SongTextAdapter() {
-
+        // TODO: 2018/9/3 Constructor with Music Structure
     }
 
     @NonNull
@@ -32,13 +33,6 @@ public class SongTextAdapter extends RecyclerView.Adapter<SongTextAdapter.ViewHo
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View songView = inflater.inflate(R.layout.textview_song, parent, false);
-        songView.setOnClickListener(v -> {
-//                Intent intent = new Intent(getActivity(), MainActivity.class);
-//                //intent.putExtra("metadata", media);
-//                startActivity(intent);
-                }
-        );
-        //AlbumGalleryAdapter.ViewHolder viewHolder = new AlbumGalleryAdapter.ViewHolder(albumView);
 
         return new SongTextAdapter.ViewHolder(songView);
     }
@@ -64,7 +58,7 @@ public class SongTextAdapter extends RecyclerView.Adapter<SongTextAdapter.ViewHo
         return 20;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView songTextView;
         public TextView songArtistTextView;
@@ -75,6 +69,18 @@ public class SongTextAdapter extends RecyclerView.Adapter<SongTextAdapter.ViewHo
             songTextView = (TextView) itemView.findViewById(R.id.text_song_name);
             songArtistTextView = (TextView) itemView.findViewById(R.id.text_song_artist);
             songTimeTextView = (TextView) itemView.findViewById(R.id.text_song_time);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            // TODO: 2018/9/3 Pass the Music Content and Start the Activity
+
+            Intent i = new Intent(mContext, AudioPlayerActivity.class);
+            i.putExtra("",0);
+            mContext.startActivity(i);
         }
     }
 

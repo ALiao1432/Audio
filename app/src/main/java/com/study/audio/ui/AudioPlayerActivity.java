@@ -35,6 +35,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
                 PopupWindow popup = new PopupWindow(AudioPlayerActivity.this);
                 View layout = getLayoutInflater().inflate(R.layout.volbar, null);
                 popup.setContentView(layout);
+
                 // Set content width and height
                 popup.setHeight(300);
                 popup.setWidth(300);
@@ -43,6 +44,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
                 // Closes the popup window when touch outside of it - when looses focus
                 popup.setOutsideTouchable(true);
                 popup.setFocusable(true);
+
                 // Show anchored to button
                 //popup.showAsDropDown(v);
                 popup.showAtLocation(v, Gravity.LEFT, 0, 200);
@@ -79,6 +81,9 @@ public class AudioPlayerActivity extends AppCompatActivity {
     }
 
     private class ClickListener implements View.OnClickListener {
+
+        // TODO: 2018/9/3 Implement the Functionality of Music Player
+
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -94,4 +99,6 @@ public class AudioPlayerActivity extends AppCompatActivity {
             }
         }
     }
+
+    // TODO: 2018/9/3 Create the Class to Load the Content of Music
 }

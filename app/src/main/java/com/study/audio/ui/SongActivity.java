@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,7 +27,7 @@ public class SongActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_song);
-        //toolbar.setBackgroundColor(Color.BLACK);
+//        toolbar.setBackgroundColor(Color.BLACK);
         toolbar.setNavigationIcon(drawable.ic_menu_revert);
 
         setSupportActionBar(toolbar);
@@ -42,9 +44,10 @@ public class SongActivity extends AppCompatActivity {
 
 //        AppBarLayout apl = (AppBarLayout) findViewById(R.id.app_bar);
 //        ViewGroup.LayoutParams appBarLayoutParams = apl.getLayoutParams();
-//        appBarLayoutParams.height = 500;
+//        appBarLayoutParams.height = 600;
 //        apl.setLayoutParams(appBarLayoutParams);
 
+        // TODO: 2018/9/3 Paste the Album Text and Image
 
         ImageView collapseImg = (ImageView) findViewById(R.id.img_collapse);
         collapseImg.setBackgroundColor(Color.GRAY);
@@ -65,5 +68,17 @@ public class SongActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_bar, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                Log.i("OptionsSelect","Return"+item.getItemId());
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
