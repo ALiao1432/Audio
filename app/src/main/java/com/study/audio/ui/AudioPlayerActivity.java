@@ -26,52 +26,47 @@ public class AudioPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_player);
 
-        Button b = (Button) findViewById(R.id.button_vol);
-        b.setOnClickListener(new View.OnClickListener(){
+        Button b = findViewById(R.id.button_vol);
+        b.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            PopupWindow popup = new PopupWindow(AudioPlayerActivity.this);
+            View layout = getLayoutInflater().inflate(R.layout.volbar, null);
+            popup.setContentView(layout);
 
-                PopupWindow popup = new PopupWindow(AudioPlayerActivity.this);
-                View layout = getLayoutInflater().inflate(R.layout.volbar, null);
-                popup.setContentView(layout);
+            // Set content width and height
+            popup.setHeight(300);
+            popup.setWidth(300);
+            popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                // Set content width and height
-                popup.setHeight(300);
-                popup.setWidth(300);
-                popup.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            // Closes the popup window when touch outside of it - when looses focus
+            popup.setOutsideTouchable(true);
+            popup.setFocusable(true);
 
-                // Closes the popup window when touch outside of it - when looses focus
-                popup.setOutsideTouchable(true);
-                popup.setFocusable(true);
+            // Show anchored to button
+            //popup.showAsDropDown(v);
+            popup.showAtLocation(v, Gravity.LEFT, 0, 200);
 
-                // Show anchored to button
-                //popup.showAsDropDown(v);
-                popup.showAtLocation(v, Gravity.LEFT, 0, 200);
+            SeekBar volbar1 = layout.findViewById(R.id.seekBar_vol);
+            volbar1.setBackgroundColor(Color.RED);
+            //volbar1.setProgress(currentProgr);
+            volbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-                SeekBar volbar1 = (SeekBar) layout.findViewById(R.id.seekBar_vol);
-                volbar1.setBackgroundColor(Color.RED);
-                //volbar1.setProgress(currentProgr);
-                volbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
 
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
+                }
 
-                    }
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
 
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
+                }
 
-                    }
-
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress,
-                                                  boolean fromUser) {
-                        //currentProgr=progress;
-                    }
-                });
-
-            }
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,
+                                              boolean fromUser) {
+                    //currentProgr=progress;
+                }
+            });
         });
 
         final ClickListener clickListener = new ClickListener();

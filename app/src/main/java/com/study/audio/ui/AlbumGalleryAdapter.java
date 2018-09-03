@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.study.audio.R;
 
 
-class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewHolder>{
+class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewHolder> {
 
     private Context mContext;
     private MediaMetadataCompat media;
@@ -28,10 +28,8 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
     @NonNull
     @Override
     public AlbumGalleryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-
         View albumView = inflater.inflate(R.layout.cardview_album, parent, false);
 
         return new AlbumGalleryAdapter.ViewHolder(albumView);
@@ -58,7 +56,7 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
         return 5;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public CardView albumCardView;
         public TextView albumTextView;
@@ -67,10 +65,10 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
 
         public ViewHolder(View itemView) {
             super(itemView);
-            albumCardView = (CardView) itemView.findViewById(R.id.card_view);
-            albumTextView = (TextView) itemView.findViewById(R.id.card_album_text);
-            albumArtistTextView = (TextView) itemView.findViewById(R.id.card_album_artist);
-            albumImageView = (ImageView) itemView.findViewById(R.id.card_album_img);
+            albumCardView = itemView.findViewById(R.id.card_view);
+            albumTextView = itemView.findViewById(R.id.card_album_text);
+            albumArtistTextView = itemView.findViewById(R.id.card_album_artist);
+            albumImageView = itemView.findViewById(R.id.card_album_img);
 
             albumCardView.setOnClickListener(this);
 
@@ -82,7 +80,7 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
             // TODO: 2018/9/3 Pass the Music Content and Start the Activity
 
             Intent i = new Intent(mContext, SongActivity.class);
-            i.putExtra("",0);
+            i.putExtra("", 0);
             mContext.startActivity(i);
         }
     }

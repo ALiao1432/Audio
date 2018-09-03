@@ -26,20 +26,18 @@ public class SongActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_song);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_song);
 //        toolbar.setBackgroundColor(Color.BLACK);
         toolbar.setNavigationIcon(drawable.ic_menu_revert);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), AudioPlayerActivity.class);
-                startActivity(i);
-            }
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            Intent i = new Intent(view.getContext(), AudioPlayerActivity.class);
+            startActivity(i);
         });
 
 //        AppBarLayout apl = (AppBarLayout) findViewById(R.id.app_bar);
@@ -49,11 +47,11 @@ public class SongActivity extends AppCompatActivity {
 
         // TODO: 2018/9/3 Paste the Album Text and Image
 
-        ImageView collapseImg = (ImageView) findViewById(R.id.img_collapse);
+        ImageView collapseImg = findViewById(R.id.img_collapse);
         collapseImg.setBackgroundColor(Color.GRAY);
         collapseImg.setImageResource(drawable.ic_media_play);
 
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rv_song);
+        RecyclerView rv = findViewById(R.id.rv_song);
         //Adapter
         SongTextAdapter songTextAdapter = new SongTextAdapter();
         //LayoutManager
@@ -77,7 +75,7 @@ public class SongActivity extends AppCompatActivity {
                 finish();
                 return true;
             default:
-                Log.i("OptionsSelect","Return"+item.getItemId());
+                Log.i("OptionsSelect", "Return" + item.getItemId());
         }
         return super.onOptionsItemSelected(item);
     }

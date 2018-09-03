@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,9 @@ public class SongTextAdapter extends RecyclerView.Adapter<SongTextAdapter.ViewHo
 //        holder.albumImageView.setBackgroundResource(drawable.ic_media_play);
 
         holder.songTextView.setText("Jazz_In_Paris");
+        holder.songTextView.setEllipsize(TextUtils.TruncateAt.END);
+//        holder.songTextView.setFocusable(true);
+        holder.songTextView.setSingleLine(true);
         holder.songTextView.setTextColor(Color.BLACK);
     }
 

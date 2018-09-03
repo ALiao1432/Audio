@@ -17,12 +17,12 @@ import android.widget.TextView;
 import com.study.audio.R;
 
 
-public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder>{
+public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
 
     private Context mContext;
     private MediaMetadataCompat media;
 
-    public SongListAdapter() {
+    SongListAdapter() {
         // TODO: 2018/9/3 Constructor with Music Structure
     }
 
@@ -60,21 +60,21 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return 5;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public CardView songCardView;
-        public TextView songTextView;
-        public TextView songArtistTextView;
-        public TextView songTimeTextView;
-        public ImageView songImageView;
+        CardView songCardView;
+        TextView songTextView;
+        TextView songArtistTextView;
+        TextView songTimeTextView;
+        ImageView songImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            songCardView = (CardView) itemView.findViewById(R.id.card_view);
-            songTextView = (TextView) itemView.findViewById(R.id.card_song_name);
-            songImageView = (ImageView) itemView.findViewById(R.id.card_song_img);
-            songArtistTextView = (TextView) itemView.findViewById(R.id.card_song_artist);
-            songTimeTextView = (TextView) itemView.findViewById(R.id.card_song_time);
+            songCardView = itemView.findViewById(R.id.card_view);
+            songTextView = itemView.findViewById(R.id.card_song_name);
+            songImageView = itemView.findViewById(R.id.card_song_img);
+            songArtistTextView = itemView.findViewById(R.id.card_song_artist);
+            songTimeTextView = itemView.findViewById(R.id.card_song_time);
 
             songCardView.setOnClickListener(this);
         }
@@ -85,7 +85,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             // TODO: 2018/9/3 Pass the Music Content and Start the Activity
 
             Intent i = new Intent(mContext, AudioPlayerActivity.class);
-            i.putExtra("",0);
+            i.putExtra("", 0);
             mContext.startActivity(i);
         }
     }

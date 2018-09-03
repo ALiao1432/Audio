@@ -30,25 +30,25 @@ public class ViewPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(), ViewPagerActivity.this));
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar_pager);
+        toolbar = findViewById(R.id.toolbar_pager);
         setSupportActionBar(toolbar);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        nvDrawer = findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
     }
@@ -69,11 +69,11 @@ public class ViewPagerActivity extends AppCompatActivity {
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        final int PAGE_COUNT =3 ;
-        private String tabTitles[] = new String[] {"Linear", "Grid", "Tab3"};
+        final int PAGE_COUNT = 3;
+        private String tabTitles[] = new String[]{"Linear", "Grid", "Tab3"};
         private Context context;
 
-        public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
+        SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             this.context = context;
         }
@@ -81,17 +81,14 @@ public class ViewPagerActivity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-
-            switch (tabTitles[position]){
+            switch (tabTitles[position]) {
                 case "Linear":
                     return "Song";
                 case "Grid":
                     return "Album";
-
                 default:
                     return "TAB";
             }
-
         }
 
         @Override
@@ -124,17 +121,14 @@ public class ViewPagerActivity extends AppCompatActivity {
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        //selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    //selectDrawerItem(menuItem);
+                    return true;
                 });
     }
 
