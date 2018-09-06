@@ -9,7 +9,7 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
@@ -25,7 +25,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="0dp"/>
+                android:layout_margin="0dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:text="name of song"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -23,7 +23,7 @@ public class PageFragment extends Fragment {
 
     public static Fragment newInstance(int page, String title) {
         Bundle args = new Bundle();
-        args.putInt("PAGE",page);
+        args.putInt("PAGE", page);
         args.putString("Title", title);
         PageFragment fragment = new PageFragment();
         fragment.setArguments(args);
@@ -56,21 +56,22 @@ public class PageFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), GridLayoutManager.VERTICAL);
         gridLayoutManager.setSpanCount(2);
 
-        switch (mTitle){
+        switch (mTitle) {
             case "Linear":
-                marginLayoutParams.setMargins(75, 0, 0, 0);
+                marginLayoutParams.setMargins(0, 0, 0, 0);
                 rv.setLayoutParams(marginLayoutParams);
                 rv.setAdapter(songAdapter);
                 rv.setLayoutManager(linearLayoutManager);
                 break;
             case "Grid":
-                marginLayoutParams.setMargins(30, 0, 0, 0);
+                marginLayoutParams.setMargins(0, 0, 0, 0);
                 rv.setLayoutParams(marginLayoutParams);
                 rv.setAdapter(albumAdapter);
                 rv.setLayoutManager(gridLayoutManager);
 
             default:
-                rv.setLayoutManager(gridLayoutManager);  break;
+                rv.setLayoutManager(gridLayoutManager);
+                break;
         }
 
         return view;
