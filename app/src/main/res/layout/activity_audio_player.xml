@@ -7,28 +7,20 @@
     tools:context=".ui.AudioPlayerActivity">
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="309dp"
         android:background="#a0ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/album_art"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/song_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
         android:text="Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/song_artist"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Song Title" />
 
@@ -36,12 +28,11 @@
         android:id="@+id/song_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:paddingBottom="12dp"
         android:text="Artist"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/song_title"
         tools:text="Song Artist" />
 
@@ -49,9 +40,13 @@
         android:id="@+id/album_art"
         android:layout_width="192dp"
         android:layout_height="192dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:alpha=".9"
         android:background="@android:color/holo_orange_light"
         android:src="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/song_artist"
@@ -72,21 +67,22 @@
         android:id="@+id/button_previous"
         android:layout_width="100dp"
         android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:alpha=".9"
         android:background="@android:color/holo_blue_dark"
         android:contentDescription="label_previous"
         android:src="@android:drawable/ic_media_previous"
         app:layout_constraintBottom_toTopOf="@+id/seekbar_audio"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/button_play"
         android:layout_width="162dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:alpha=".9"
         android:background="@android:color/holo_red_light"
         android:contentDescription="label_play_pause"
@@ -94,24 +90,21 @@
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/seekbar_audio"
         app:layout_constraintEnd_toStartOf="@+id/button_next"
-        app:layout_constraintStart_toEndOf="@+id/button_previous"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/button_previous" />
 
     <ImageView
         android:id="@+id/button_next"
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:alpha=".9"
         android:background="@android:color/holo_purple"
         android:contentDescription="next"
         android:src="@android:drawable/ic_media_next"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/seekbar_audio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -124,13 +117,13 @@
         android:id="@+id/seekbar_audio"
         android:layout_width="167dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -142,7 +135,6 @@
         android:drawableRight="@android:drawable/ic_btn_speak_now"
         app:layout_constraintBottom_toTopOf="@+id/button_previous"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </android.support.constraint.ConstraintLayout>
