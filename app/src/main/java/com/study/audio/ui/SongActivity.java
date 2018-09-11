@@ -4,9 +4,7 @@ import android.R.drawable;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +12,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.study.audio.MediaData;
 import com.study.audio.R;
 
+import java.util.List;
+
 public class SongActivity extends AppCompatActivity {
+
+    private final String TAG = "SongActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +43,24 @@ public class SongActivity extends AppCompatActivity {
             startActivity(i);
         });
 
-//        AppBarLayout apl = (AppBarLayout) findViewById(R.id.app_bar);
-//        ViewGroup.LayoutParams appBarLayoutParams = apl.getLayoutParams();
-//        appBarLayoutParams.height = 600;
-//        apl.setLayoutParams(appBarLayoutParams);
-
         // TODO: 2018/9/3 Paste the Album Text and Image
+
+        List<MediaData> mediaDataList = getIntent().getParcelableArrayListExtra(Intent.EXTRA_STREAM);
 
         ImageView collapseImg = findViewById(R.id.img_collapse);
         collapseImg.setBackgroundColor(Color.GRAY);
-        collapseImg.setImageResource(drawable.ic_media_play);
+
+        RequestOptions requestOptions =
+                new RequestOptions().centerCrop()
+                        .placeholder(R.drawable.ic_album_black_24dp);
+        Glide.with(this)
+                .load(mediaDataList.get(0).getAlbumId())
+                .apply(requestOptions)
+                .into(collapseImg);
 
         RecyclerView rv = findViewById(R.id.rv_song);
         //Adapter
-        SongTextAdapter songTextAdapter = new SongTextAdapter();
+        SongTextAdapter songTextAdapter = new SongTextAdapter(mediaDataList);
         //LayoutManager
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

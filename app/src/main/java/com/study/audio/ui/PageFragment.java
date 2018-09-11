@@ -47,8 +47,8 @@ public class PageFragment extends Fragment {
         ViewGroup.MarginLayoutParams marginLayoutParams =
                 (ViewGroup.MarginLayoutParams) rv.getLayoutParams();
         //Adapter
-        AlbumGalleryAdapter albumAdapter = new AlbumGalleryAdapter();
-        SongListAdapter songAdapter = new SongListAdapter();
+        AlbumGalleryAdapter albumAdapter = new AlbumGalleryAdapter(ViewPagerActivity.mediaPathList);
+        SongListAdapter songAdapter = new SongListAdapter(ViewPagerActivity.mediaPathList);
 
         //LayoutManager
         LinearLayoutManager linearLayoutManager =
@@ -58,17 +58,16 @@ public class PageFragment extends Fragment {
 
         switch (mTitle) {
             case "Linear":
-                marginLayoutParams.setMargins(75, 0, 0, 0);
+                marginLayoutParams.setMargins(0, 0, 0, 0);
                 rv.setLayoutParams(marginLayoutParams);
                 rv.setAdapter(songAdapter);
                 rv.setLayoutManager(linearLayoutManager);
                 break;
             case "Grid":
-                marginLayoutParams.setMargins(30, 0, 0, 0);
+                marginLayoutParams.setMargins(0, 0, 0, 0);
                 rv.setLayoutParams(marginLayoutParams);
                 rv.setAdapter(albumAdapter);
                 rv.setLayoutManager(gridLayoutManager);
-
             default:
                 rv.setLayoutManager(gridLayoutManager);
                 break;
