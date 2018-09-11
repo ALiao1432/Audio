@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_rv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <!-- A CardView that contains a TextView -->
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
@@ -25,7 +23,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="0dp"/>
+                android:layout_margin="0dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +39,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:text="name of song"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,7 +51,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Artist "
                         android:textSize="12sp" />
 
                     <ImageView
@@ -61,14 +58,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        card_view:srcCompat="@android:drawable/ic_lock_idle_alarm" />
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginStart="2dp"
+                        android:tint="#9e9e9e"
+                        card_view:srcCompat="@drawable/ic_access_time_black_24dp" />
 
                     <TextView
                         android:id="@+id/card_song_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="00:00"
                         android:textSize="12sp" />
 
                 </LinearLayout>

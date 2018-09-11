@@ -23,7 +23,7 @@ public class PageFragment extends Fragment {
 
     public static Fragment newInstance(int page, String title) {
         Bundle args = new Bundle();
-        args.putInt("PAGE",page);
+        args.putInt("PAGE", page);
         args.putString("Title", title);
         PageFragment fragment = new PageFragment();
         fragment.setArguments(args);
@@ -43,12 +43,12 @@ public class PageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_page, container, false);
         //TextView textView = (TextView) view;textView.setText(new StringBuffer().append("Fragment ").append(mPage).toString());
 
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.fragment_rv);
+        RecyclerView rv = view.findViewById(R.id.fragment_rv);
         ViewGroup.MarginLayoutParams marginLayoutParams =
                 (ViewGroup.MarginLayoutParams) rv.getLayoutParams();
         //Adapter
-        AlbumGalleryAdapter albumAdapter = new AlbumGalleryAdapter();
-        SongListAdapter songAdapter = new SongListAdapter();
+        AlbumGalleryAdapter albumAdapter = new AlbumGalleryAdapter(ViewPagerActivity.mediaPathList);
+        SongListAdapter songAdapter = new SongListAdapter(ViewPagerActivity.mediaPathList);
 
         //LayoutManager
         LinearLayoutManager linearLayoutManager =
@@ -56,23 +56,22 @@ public class PageFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), GridLayoutManager.VERTICAL);
         gridLayoutManager.setSpanCount(2);
 
-        switch (mTitle){
+        switch (mTitle) {
             case "Linear":
-                marginLayoutParams.setMargins(75, 0, 0, 0);
+                marginLayoutParams.setMargins(0, 0, 0, 0);
                 rv.setLayoutParams(marginLayoutParams);
                 rv.setAdapter(songAdapter);
                 rv.setLayoutManager(linearLayoutManager);
                 break;
             case "Grid":
-                marginLayoutParams.setMargins(30, 0, 0, 0);
+                marginLayoutParams.setMargins(0, 0, 0, 0);
                 rv.setLayoutParams(marginLayoutParams);
                 rv.setAdapter(albumAdapter);
                 rv.setLayoutManager(gridLayoutManager);
-
             default:
-                rv.setLayoutManager(gridLayoutManager);  break;
+                rv.setLayoutManager(gridLayoutManager);
+                break;
         }
-
         return view;
     }
 
