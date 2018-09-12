@@ -91,7 +91,11 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
                     break;
                 case R.id.button_play:
-
+//                    if (mediaPlayer.isPlaying()) {
+//                        playImg.setSelected(true);
+//                    } else {
+//                        playImg.setSelected(false);
+//                    }
                     break;
                 case R.id.button_next:
 
