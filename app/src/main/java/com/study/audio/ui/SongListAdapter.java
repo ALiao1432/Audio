@@ -21,6 +21,8 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     private Context mContext;
 
+    SongList  = getMusics();
+    
     public SongListAdapter() {
         // TODO: 2018/9/3 Constructor with Music Structure
     }

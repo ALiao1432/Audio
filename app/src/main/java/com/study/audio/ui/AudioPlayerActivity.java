@@ -1,5 +1,9 @@
 package com.study.audio.ui;
 
+import java.util.ArrayList;
+
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -9,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -105,4 +111,45 @@ public class AudioPlayerActivity extends AppCompatActivity {
     }
 
     // TODO: 2018/9/3 Create the Class to Load the Content of Music
+    public ArrayList<Song> getMusics(){
+		 
+       ArrayList<Song> songlist = new ArrayList<Song>();
+     ContentResolver contentResolver = getContentResolver();
+ 	  Uri uri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+ 	  Cursor cursor = contentResolver.query(uri, null, null, null, null);
+ 	  if (cursor == null) {
+ 	    Log.d("=======>", "noting");
+ 	} else if (!cursor.moveToFirst()) {
+ 	    Log.d("=======>", "done");
+ 	} else {
+      
+              while (!cursor.isAfterLast()) {
+       	    int id = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
+           
+           String tilte = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
+           
+           String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
+           
+           String url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
+         
+           int duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
+           
+           String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
+           int albumId = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
+           
+             Song song = new Song();
+             song.setId(id);
+             song.setTitle(tilte);
+             song.setArtist(artist);
+             song.setUrl(url);
+             song.setTime(duration);
+             song.setAlbum(album);
+             song.setAlbumId(albumId);
+             songlist.add(song));
+
+             cursor.moveToNext();
+       }
+   }
+   return songlist;
+}
 }
