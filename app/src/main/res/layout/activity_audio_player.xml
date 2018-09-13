@@ -85,7 +85,7 @@
         android:alpha=".9"
         android:background="@android:color/holo_red_light"
         android:contentDescription="label_play_pause"
-        android:src="@drawable/ic_play_pause_toggle"
+        android:src="@android:drawable/ic_media_play"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/seekbar_audio"
         app:layout_constraintEnd_toStartOf="@+id/button_next"
