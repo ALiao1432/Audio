@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,13 +15,14 @@ import android.widget.TextView;
 
 import com.study.audio.R;
 
+import java.util.ArrayList;
+
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
 
     private Context mContext;
 
-    SongList  = getMusics();
-    
+
     public SongListAdapter() {
         // TODO: 2018/9/3 Constructor with Music Structure
     }
