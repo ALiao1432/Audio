@@ -1,28 +1,60 @@
 package com.study.audio.ui;
 
-public class Song {
-    private int id;
-    private String title;
-    private String artist;
-    private String url;
-    private String time;
-    private int albumId;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Song implements Parcelable {
+    private String data;
+    private String displayName;
     private String album;
+    private String albumId;
+    private String artist;
+    private String duration;
 
-    public int getId() {
-        return id;
+    public Song(String data, String displayName, String album, String albumId, String artist, String duration) {
+        this.data = data;
+        this.displayName = displayName;
+        this.album = album;
+        this.albumId = albumId;
+        this.artist = artist;
+        this.duration = duration;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    protected Song(Parcel in) {
+        data = in.readString();
+        displayName = in.readString();
+        album = in.readString();
+        albumId = in.readString();
+        artist = in.readString();
+        duration = in.readString();
     }
 
-    public String getTitle() {
-        return title;
+    public static final Creator<Song> CREATOR = new Creator<Song>() {
+        @Override
+        public Song createFromParcel(Parcel in) {
+            return new Song(in);
+        }
+
+        @Override
+        public Song[] newArray(int size) {
+            return new Song[size];
+        }
+    };
+
+    public String getAlbum() {
+        return album;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(String albumId) {
+        this.albumId = albumId;
     }
 
     public String getArtist() {
@@ -33,42 +65,54 @@ public class Song {
         this.artist = artist;
     }
 
-    public String getUrl() {
-        return url;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
-    public String getTime() {
-        return time;
+    public String getData() {
+        return data;
     }
 
-    //�澆����
-    public void setTime(int time) {
-        time /= 1000;
-        int minute = time / 60;
-        int hour = minute / 60;
-        int second = time % 60;
-        minute %= 60;
-        this.time = String.format("%02d:%02d", minute, second);
+    public void setData(String data) {
+        this.data = data;
     }
 
-  
-    public int getAlbumId() {
-        return albumId;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setAlbumId(int albumId) {
-        this.albumId = albumId;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getAlbum() {
-        return album;
+    @Override
+    public String toString() {
+        return "MediaData{" +
+//                "data='" + data + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", album='" + album + '\'' +
+//                ", albumId='" + albumId + '\'' +
+//                ", artist='" + artist + '\'' +
+//                ", duration='" + duration + '\'' +
+                '}';
     }
 
-    public void setAlbum(String album) {
-        this.album = album;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(data);
+        dest.writeString(displayName);
+        dest.writeString(album);
+        dest.writeString(albumId);
+        dest.writeString(artist);
+        dest.writeString(duration);
     }
 }

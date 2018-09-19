@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.study.audio.R;
 
 
-class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewHolder>{
+class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewHolder> {
 
     private Context mContext;
     private MediaMetadataCompat media;
@@ -58,7 +58,7 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
         return 5;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public CardView albumCardView;
         public TextView albumTextView;
@@ -82,7 +82,7 @@ class AlbumGalleryAdapter extends RecyclerView.Adapter<AlbumGalleryAdapter.ViewH
             // TODO: 2018/9/3 Pass the Music Content and Start the Activity
 
             Intent i = new Intent(mContext, SongActivity.class);
-            i.putExtra("",0);
+            i.putExtra("", 0);
             mContext.startActivity(i);
         }
     }

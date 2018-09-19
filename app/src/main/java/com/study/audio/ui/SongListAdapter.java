@@ -1,30 +1,38 @@
 package com.study.audio.ui;
 
-import android.R.drawable;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.study.audio.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
 
-    private Context mContext;
+    private final String TAG = "SongListAdapter";
 
+    private Context mContext;
+    private List<Song> songList;
 
     public SongListAdapter() {
-        // TODO: 2018/9/3 Constructor with Music Structure
+    }
+
+    public SongListAdapter(List<Song> list) {
+        songList = list;
     }
 
     @NonNull
@@ -39,20 +47,48 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull SongListAdapter.ViewHolder holder, int position) {
-        // TODO: 2018/8/20 Load the Media Data
-
-        holder.songImageView.setImageResource(drawable.ic_media_play);
+        RequestOptions requestOptions =
+                new RequestOptions().centerCrop()
+                        .placeholder(R.drawable.ic_album_black_24dp);
+        Glide.with(mContext)
+                .load(songList.get(position).getAlbumId())
+                .apply(requestOptions)
+                .into(holder.songImageView);
         holder.songImageView.setBackgroundColor(Color.GRAY);
-        holder.songTextView.setText("Jazz_In_Paris");
+
+        int duration = Integer.valueOf(songList.get(position).getDuration()) / 1000;
+        int min = duration / 60;
+        int sec = duration % 60;
+        String time;
+        if (sec < 10) {
+            time = min + ":0" + sec;
+        } else {
+            time = min + ":" + sec;
+        }
+
+        holder.songTextView.setText(songList.get(position).getDisplayName());
         holder.songTextView.setTextColor(Color.BLACK);
+        holder.songTextView.setEllipsize(TextUtils.TruncateAt.END);
+        holder.songTextView.setSingleLine(true);
+        holder.songArtistTextView.setText(songList.get(position).getArtist());
+        holder.songTimeTextView.setText(time);
+        holder.songCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, AudioPlayerActivity.class);
+                i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, (ArrayList<Song>) songList);
+                i.putExtra("CURRENT_POSITION", position);
+                mContext.startActivity(i);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return songList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView songCardView;
         TextView songTextView;
@@ -67,18 +103,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             songImageView = itemView.findViewById(R.id.card_song_img);
             songArtistTextView = itemView.findViewById(R.id.card_song_artist);
             songTimeTextView = itemView.findViewById(R.id.card_song_time);
-
-            songCardView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            // TODO: 2018/9/3 Pass the Music Content and Start the Activity
-
-            Intent i = new Intent(mContext, AudioPlayerActivity.class);
-            i.putExtra("", 0);
-            mContext.startActivity(i);
         }
     }
-
 }
