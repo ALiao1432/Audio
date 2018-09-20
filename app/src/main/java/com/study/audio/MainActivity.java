@@ -161,9 +161,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        songList.forEach(mediaData -> {
-            int i = tempAlbumList.indexOf(mediaData.getAlbum());
-            mediaData.setAlbumId(tempAlbumArtList.get(i));
+        songList.forEach(song -> {
+            int i = tempAlbumList.indexOf(song.getAlbum());
+            song.setAlbumId(tempAlbumArtList.get(i));
         });
 
         if (cursor != null) {
