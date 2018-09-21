@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        songList.forEach(song -> Log.d(TAG, "setView!!!: " + song));
-
         recyclerView.setAdapter(new SongListAdapter(songList));
     }
 

@@ -1,40 +1,29 @@
 package com.study.audio.ui;
 
-import java.util.ArrayList;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.study.audio.MyMediaPlayer;
 import com.study.audio.R;
 
 import java.io.IOException;
@@ -46,7 +35,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
     private final String TAG = "AudioPlayerActivity";
 
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer;
     private ImageView btn_play;
     private ImageView btn_previous;
     private ImageView btn_next;
@@ -54,7 +43,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
     private TextView titleText;
     private TextView artistText;
     private SeekBar skBar;
-    private SeekBar volbar1;
+    private SeekBar volBar;
     private Button b;
     private List<Song> songList;
     private int currentPosition;
@@ -90,17 +79,16 @@ public class AudioPlayerActivity extends AppCompatActivity {
         //popup.showAsDropDown(v);
         popup.showAtLocation(v, Gravity.LEFT, 0, 200);
 
-        volbar1 = layout.findViewById(R.id.seekBar_vol);
-        volbar1.setBackgroundColor(Color.RED);
+        volBar = layout.findViewById(R.id.seekBar_vol);
+        volBar.setBackgroundColor(Color.RED);
         final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int currentVol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        //给volume bar设置最大值和默认值（先获取系统Music音量的最大值和当前值）
-        volbar1.setMax(maxVol);
-        volbar1.setProgress(currentVol);
-        //volbar1.setProgress(currentProgr);
 
-        volbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        //给volume bar设置最大值和默认值（先获取系统Music音量的最大值和当前值）
+        volBar.setMax(maxVol);
+        volBar.setProgress(currentVol);
+        volBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -118,8 +106,8 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
                 int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
                 int currentVol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                volbar1.setMax(maxVol);
-                volbar1.setProgress(currentVol);
+                volBar.setMax(maxVol);
+                volBar.setProgress(currentVol);
             }
         });
 
@@ -135,16 +123,6 @@ public class AudioPlayerActivity extends AppCompatActivity {
         artImg = findViewById(R.id.album_art);
         titleText = findViewById(R.id.song_title);
         artistText = findViewById(R.id.song_artist);
-
-        titleText.setText(songList.get(currentPosition).getDisplayName());
-        artistText.setText(songList.get(currentPosition).getArtist());
-
-        RequestOptions requestOptions =
-                new RequestOptions().centerCrop().placeholder(R.drawable.ic_album_black_24dp);
-        Glide.with(this)
-                .load(songList.get(currentPosition).getAlbumId())
-                .apply(requestOptions)
-                .into(artImg);
     }
 
     private void setView() {
@@ -174,6 +152,49 @@ public class AudioPlayerActivity extends AppCompatActivity {
                 mediaPlayer.seekTo(skBar.getProgress());
             }
         });
+
+        titleText.setText(songList.get(currentPosition).getDisplayName());
+        titleText.setSingleLine();
+        titleText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        artistText.setText(songList.get(currentPosition).getArtist());
+
+        RequestOptions requestOptions =
+                new RequestOptions().centerCrop();
+        Glide.with(this)
+                .load(songList.get(currentPosition).getAlbumId())
+                .apply(requestOptions)
+                .into(artImg);
+    }
+
+    private void changeSong(int index) {
+        if (index >= 0 && index < songList.size()) {
+            currentPosition = index;
+            mediaPlayer.reset();
+            try {
+                mediaPlayer.setDataSource(songList.get(currentPosition).getData());
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaPlayer.start();
+            setUiElement();
+            btn_play.setImageResource(R.drawable.ic_vd_pause);
+        } else {
+            Toast.makeText(AudioPlayerActivity.this, "No previous song~~~", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setUiElement() {
+        RequestOptions requestOptions =
+                new RequestOptions().centerCrop()
+                        .placeholder(R.drawable.ic_album_black_24dp);
+        Glide.with(this)
+                .load(songList.get(currentPosition).getAlbumId())
+                .apply(requestOptions)
+                .into(artImg);
+
+        titleText.setText(songList.get(currentPosition).getDisplayName());
+        artistText.setText(songList.get(currentPosition).getArtist());
     }
 
     private class ClickListener implements View.OnClickListener {
@@ -183,15 +204,19 @@ public class AudioPlayerActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_previous:
-
+                    if (isPlayFiveSecs()) {
+                        mediaPlayer.seekTo(0);
+                    } else {
+                        changeSong(currentPosition - 1);
+                    }
                     break;
                 case R.id.button_play:
-                    SetPlay();
+                    setPlay();
                     updateSeekBar();
                     // System.out.println("按钮被点击了");
                     break;
                 case R.id.button_next:
-
+                    changeSong(currentPosition + 1);
                     break;
             }
         }
@@ -200,26 +225,28 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
     public void initMediaPlayer() {
         try {
+            mediaPlayer = MyMediaPlayer.getMediaPlayer();
             mediaPlayer.setDataSource(songList.get(currentPosition).getData());
             mediaPlayer.prepare();
-
+            mediaPlayer.start();
+            updateSeekBar();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void SetPlay() {
+    private boolean isPlayFiveSecs() {
+        return mediaPlayer.getCurrentPosition() / 1000 > 5f;
+    }
+
+    public void setPlay() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
-            //btn_play.setImageResource(com.android.internal.R.drawable.ic_media_pause);
-
-            btn_play.setImageResource(Resources.getSystem().getIdentifier("ic_media_pause", "drawable", "android"));
+            btn_play.setImageResource(R.drawable.ic_vd_pause);
         } else {
             mediaPlayer.pause();
-            btn_play.setImageResource(Resources.getSystem().getIdentifier("ic_media_play", "drawable", "android"));
-
+            btn_play.setImageResource(R.drawable.ic_vd_play);
         }
-
     }
 
     private void updateSeekBar() {
@@ -263,7 +290,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
             if (intent.getAction().equals("android.media.VOLUME_CHANGED_ACTION")) {
                 AudioManager mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 int currVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);// 当前的媒体音量
-                volbar1.setProgress(currVolume);
+                volBar.setProgress(currVolume);
             }
         }
     }
