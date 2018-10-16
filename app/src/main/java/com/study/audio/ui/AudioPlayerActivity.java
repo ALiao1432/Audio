@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.study.audio.R;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.media.AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
 import static android.media.AudioManager.STREAM_MUSIC;
@@ -43,6 +46,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
     private ImageView artImg;
     private TextView titleTextView;
     private TextView artistTextView;
+    private SeekBar seekBar;
     private Button b;
     private int currentPosition;
 
@@ -72,6 +76,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
             mediaPlayer.setDataSource(mediaDataList.get(currentPosition).getData());
             mediaPlayer.prepare();
             mediaPlayer.start();
+            updateSeekBar();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,6 +89,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
         artImg = findViewById(R.id.album_art);
         titleTextView = findViewById(R.id.song_title);
         artistTextView = findViewById(R.id.song_artist);
+        seekBar = findViewById(R.id.seekbar_audio);
         b = findViewById(R.id.button_vol);
     }
 
@@ -94,6 +100,23 @@ public class AudioPlayerActivity extends AppCompatActivity {
         playImg.setOnClickListener(clickListener);
         nextImg.setOnClickListener(clickListener);
         b.setOnClickListener(this::showPopWindows);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
     }
 
     private void setUiElement() {
@@ -106,6 +129,9 @@ public class AudioPlayerActivity extends AppCompatActivity {
                 .into(artImg);
 
         titleTextView.setText(mediaDataList.get(currentPosition).getDisplayName());
+        titleTextView.setSingleLine();
+        titleTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+
         artistTextView.setText(mediaDataList.get(currentPosition).getArtist());
     }
 
@@ -170,10 +196,23 @@ public class AudioPlayerActivity extends AppCompatActivity {
         return mediaPlayer.getCurrentPosition() / 1000 > 5f;
     }
 
+    private void updateSeekBar() {
+        final int duration = mediaPlayer.getDuration();
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                int currentPosition = mediaPlayer.getCurrentPosition();
+                seekBar.setMax(duration);
+                seekBar.setProgress(currentPosition);
+            }
+        };
+        timer.schedule(task, 100, 1000);
+
+    }
+
     private class ClickListener implements View.OnClickListener {
-
-        // TODO: 2018/9/3 Implement the Functionality of Music Player
-
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -192,6 +231,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
                         mediaPlayer.start();
                         playImg.setSelected(false);
                     }
+                    updateSeekBar();
                     break;
                 case R.id.button_next:
                     changeSong(currentPosition + 1);
@@ -199,6 +239,4 @@ public class AudioPlayerActivity extends AppCompatActivity {
             }
         }
     }
-
-    // TODO: 2018/9/3 Create the Class to Load the Content of Music
 }

@@ -4,15 +4,14 @@ import android.media.MediaPlayer;
 
 public class MyMediaPlayer {
 
-    static MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer = new MediaPlayer();
+
+    private MyMediaPlayer() {
+
+    }
 
     public static MediaPlayer getMediaPlayer() {
-        if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
-        } else {
-            mediaPlayer.reset();
-        }
-
+        mediaPlayer.reset();
         return mediaPlayer;
     }
 }
